@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: bot
+
+app:
+  telegram:
+    url: https://api.telegram.org/bot
+    token: ${TELEGRAM_TOKEN}
+    update-listener-sleep: 1s
+    debug: false
+
+scrapper:
+  url: http://scrapper:8081
+
+logging:
+  structured:
+    format:
+      console: ecs
