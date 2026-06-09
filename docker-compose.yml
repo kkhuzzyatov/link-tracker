@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:15
+    container_name: db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  scrapper:
+    container_name: scrapper
+    build:
+      context: ./scrapper
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    env_file:
+      - scrapper/.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 7s
+      timeout: 5s
+      retries: 10
+      start_period: 7s
+    networks:
+      - backend
+
+  bot:
+    container_name: bot
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    depends_on:
+      - scrapper
+    ports:
+      - "8080:8080"
+    env_file:
+      - bot/.env
+    command: ["/bin/sh", "-c", "until curl -s http://scrapper:8081/health; do sleep 5; done; java -jar bot.jar"]
+    networks:
+      - backend
+
+volumes:
+  pgdata:
+
+networks:
+  backend:
+    driver: bridge
