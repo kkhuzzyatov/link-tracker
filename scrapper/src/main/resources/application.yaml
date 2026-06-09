@@ -1,0 +1,34 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: scrapper
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  liquibase:
+    change-log: classpath:/migrations/master.xml
+    enabled: true
+
+access:
+  type: SQL
+
+app:
+  stackoverflow:
+    key: ${STACKOVERFLOW_KEY} # Use env variable. DO NOT KEEP TOKEN HERE
+    access-token: ${STACKOVERFLOW_ACCESS_KEY} # Use env variable. DO NOT KEEP TOKEN HERE
+  github:
+    token: ${GITHUB_TOKEN} # Use env variable. DO NOT KEEP TOKEN HERE
+
+batch:
+  size: 50
+
+bot:
+  url: http://bot:8080
+
+logging:
+  structured:
+    format:
+      console: ecs

@@ -1,0 +1,19 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+           http://www.liquibase.org/xml/ns/dbchangelog
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="kkhuzzyatov">
+        <sqlFile path="changelog_01_chat.sql"
+                 relativeToChangelogFile="true"/>
+        <sqlFile path="changelog_02_link.sql"
+                 relativeToChangelogFile="true"/>
+        <sqlFile path="changelog_03_tag.sql"
+                 relativeToChangelogFile="true"/>
+        <sqlFile path="changelog_04_tracked_link.sql"
+                 relativeToChangelogFile="true"/>
+    </changeSet>
+
+</databaseChangeLog>
